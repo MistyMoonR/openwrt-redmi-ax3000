@@ -28,4 +28,18 @@ define Device/UbiFit
   IMAGE/nand-sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 
+define Device/redmi_ax3000
+  $(call Device/FitImage)
+  $(call Device/UbiFit)
+  SOC := qcom-ipq5000
+  DEVICE_VENDOR := Redmi
+  DEVICE_MODEL := AX3000
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  DEVICE_DTS_CONFIG := config@mp02.1
+  ROOTFSNAME_IN_UBI := ubi_rootfs
+  IMAGES := nand-factory.ubi
+endef
+TARGET_DEVICES += redmi_ax3000
+
 $(eval $(call BuildImage))
