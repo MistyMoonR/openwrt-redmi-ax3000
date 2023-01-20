@@ -449,9 +449,6 @@ ifeq ($(BUILD_VARIANT),smallbuffers)
 endif
 
 ifneq ($(CONFIG_TARGET_ipq50xx),)
-	# Undefine this mean larger memory
-	config-y += ATH11K_MEM_PROFILE_512M
-
 	C_DEFINES+= \
 		-I$(STAGING_DIR)/usr/include/qca-nss-drv \
 		-I$(STAGING_DIR)/usr/include/qca-nss-clients \

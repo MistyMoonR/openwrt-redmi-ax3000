@@ -12,6 +12,9 @@ PKG_CONFIG_DEPENDS += \
 	CONFIG_ATH9K_TX99 \
 	CONFIG_ATH10K_LEDS \
 	CONFIG_ATH10K_THERMAL \
+	CONFIG_ATH11K_MEM_PROFILE_256M \
+	CONFIG_ATH11K_MEM_PROFILE_512M \
+	CONFIG_ATH11K_MEM_PROFILE_1G \
 	CONFIG_ATH_USER_REGD
 
 ifdef CONFIG_PACKAGE_MAC80211_DEBUGFS
@@ -53,6 +56,9 @@ config-$(CONFIG_ATH9K_TX99) += ATH9K_TX99
 config-$(CONFIG_ATH9K_UBNTHSR) += ATH9K_UBNTHSR
 config-$(CONFIG_ATH10K_LEDS) += ATH10K_LEDS
 config-$(CONFIG_ATH10K_THERMAL) += ATH10K_THERMAL
+config-$(CONFIG_ATH11K_MEM_PROFILE_256M) += ATH11K_MEM_PROFILE_256M
+config-$(CONFIG_ATH11K_MEM_PROFILE_512M) += ATH11K_MEM_PROFILE_512M
+config-$(CONFIG_ATH11K_MEM_PROFILE_1G) += ATH11K_MEM_PROFILE_1G
 
 config-$(call config_package,ath9k-htc) += ATH9K_HTC
 config-$(call config_package,ath10k) += ATH10K ATH10K_PCI
@@ -309,6 +315,28 @@ define KernelPackage/ath11k/description
 This module adds support for wireless adapters based on
 Atheros IEEE 802.11ax family of chipsets. For now only
 AHB is supported.
+endef
+
+define KernelPackage/ath11k/config
+
+	choice
+		prompt "Memory profile"
+		depends on PACKAGE_kmod-ath11k
+		default ATH11K_MEM_PROFILE_256M if DEFAULT_ATH11K_MEM_PROFILE_256M
+		default ATH11K_MEM_PROFILE_512M if DEFAULT_ATH11K_MEM_PROFILE_512M
+		default ATH11K_MEM_PROFILE_1G
+
+	config ATH11K_MEM_PROFILE_256M
+		bool "256MB"
+
+	config ATH11K_MEM_PROFILE_512M
+		bool "512MB"
+
+	config ATH11K_MEM_PROFILE_1G
+		bool "1GB"
+
+	endchoice
+
 endef
 
 define KernelPackage/carl9170
